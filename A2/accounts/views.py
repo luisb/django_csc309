@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import logout as auth_logout
@@ -10,6 +11,8 @@ from django.contrib.auth.models import User
 from .forms import RegisterForm, LoginForm, UpdateUserForm
 
 # Create your views here.
+def home(request):
+    return render(request, 'accounts/home.html')
 
 class RegisterView(View):
     form_class = RegisterForm
