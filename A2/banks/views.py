@@ -4,6 +4,8 @@ from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
+from django.shortcuts import get_object_or_404
+import json
 
 from .models import Bank, Branch
 from .forms import BankAddForm, BranchAddForm
@@ -40,8 +42,11 @@ class BankCreateView(LoginRequiredMixin401, CreateView):
 class BranchListView(generic.ListView):
     model = Branch
 
-class BranchDetailView(generic.DetailView):
-    model = Branch
+def branch_detail_view(request, pk):
+    branch = get_object_or_404(Branch, pk=pk)
+    queryset = Branch.objects.filter(pk=pk).values('id', 'name', 'transit_number', 'address', 'email', 'capacity', 'last_modified')
+    s_qs = str(json.dumps(list(queryset), default=str)).lstrip('[').rstrip(']')
+    return render(request, 'banks/branch_detail.html', {'data': s_qs})
 
 class BranchCreateView(LoginRequiredMixin401, CreateView):
     model = Branch

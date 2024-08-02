@@ -9,5 +9,5 @@ urlpatterns = [
     
     path('<int:pk>/branches/', views.BranchListView.as_view(), name='branch-list'),
     path('<int:pk>/branches/add/', views.BranchCreateView.as_view(), name='branch-add'),
-    path('branch/<int:pk>/details/', views.BranchDetailView.as_view(), name='branch-detail'),
+    path('branch/<int:pk>/details/', views.branch_detail_view, name='branch-detail'),
 ]
