@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %} Add Branch {% endblock title%}
+{% block content %}
+<h1>Add a Branch - {{ bank }}</h1>
+<form method="POST" novalidate>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+</form>
+{% endblock content %}

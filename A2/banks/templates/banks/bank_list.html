@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %} Banks {% endblock title%}
+{% block content %}
+<h1>Banks</h1>
+{% if bank_list %}
+  <ul>
+    {% for bank in bank_list %}
+    <li>
+        <a href="{{ bank.get_absolute_url }}">{{ bank.name }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>There are no banks./p>
+{% endif %}
+<a href="{% url 'bank-add' %}">Add a bank</a>
+{% endblock content %}
