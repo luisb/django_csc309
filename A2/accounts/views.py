@@ -12,7 +12,7 @@ from .forms import RegisterForm, LoginForm, UpdateUserForm
 
 # Create your views here.
 def home(request):
-    return render(request, 'accounts/home.html')
+    return redirect('bank-list')
 
 class RegisterView(View):
     form_class = RegisterForm

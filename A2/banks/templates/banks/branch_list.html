@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %} Banks {% endblock title%}
+{% block content %}
+<h1>Branches</h1>
+{% if branch_list %}
+  <ul>
+    {% for branch in branch_list %}
+    <li>
+        <a href="{{ branch.get_absolute_url }}">{{ branch.name }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>There are no branches of this bank. <a href="{% url 'branch-add' pk %}">Add one</a></p>
+{% endif %}
+{% endblock content %}

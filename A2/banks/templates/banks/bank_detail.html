@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %} Banks {% endblock title%}
+{% block content %}
+<h1>Bank: {{ bank.name }}</h1>
+<h3>Owner: {{ bank.owner.first_name }} {{ bank.owner.last_name }}</h3>
+<p>Description: {{ bank.description }}</p>
+<p>Institution number: {{ bank.institution_number }}</p>
+<p>Swift code: {{ bank.swift_code }}</p>
+
+<div style="margin-left: 20px; margin-top: 20px;">
+    <h4>Branches</h4>
+    {% for branch in bank.branch_set.all %}
+    <p><a href="{% url 'branch-detail' branch.id %}">{{ branch.name }}</a></p>
+    {% empty %}
+    <p>There are no branches of this bank.</p>
+    {% endfor %}
+</div>
+<a href="{% url 'bank-list' %}">Back to bank list</a> <a href="{% url 'branch-add' bank.id %}">Add a branch</a>
+
+{% endblock content %}

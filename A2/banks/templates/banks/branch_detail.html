@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %} Banks {% endblock title%}
+{% block content %}
+<h1>{{ branch.bank.name }} - {{ branch.name }}</h1>
+<h3>Transit number: {{ branch.transit_number }}</h3>
+<p>Address: {{ branch.address }}</p>
+<p>Email: {{ branch.email }}</p>
+<p>Capacity: {{ branch.capacity }}</p>
+<a href="{% url 'bank-detail' branch.bank.id %}">Back to {{ branch.bank.name }}</a>
+{% endblock content %}
