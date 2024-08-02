@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %} Add Branch {% endblock title%}
 {% block content %}
-<h1>Add a Branch - {{ bank }}</h1>
+<h1>{% if branch.id %}Edit {% else %}Add a {% endif %}Branch - {% if branch.id %} {{ branch.name }} {% else %} {{ bank }} {% endif %}</h1>
 <form method="POST" novalidate>
     {% csrf_token %}
     {{ form.as_p }}

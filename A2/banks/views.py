@@ -4,6 +4,7 @@ from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 import json
 
@@ -14,8 +15,17 @@ from .forms import BankAddForm, BranchAddForm
 class LoginRequiredMixin401(LoginRequiredMixin):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
-            return HttpResponse('401 Unauthorized', status=401)
+            return HttpResponse('<h1>401 Unauthorized</h1>', status=401)
         return super().dispatch(request, *args, **kwargs)
+
+def login_required401(function):
+    def wrapper(request, *args, **kwargs):
+        user = request.user
+        if not user.id:
+            return HttpResponse('<h1>401 Unauthorized</h1>', status=401)
+        else:
+            return function(request, *args, **kwargs)
+    return wrapper
 
 class BankListView(generic.ListView):
     model = Bank
@@ -42,6 +52,7 @@ class BankCreateView(LoginRequiredMixin401, CreateView):
 class BranchListView(generic.ListView):
     model = Branch
 
+@login_required401
 def branch_detail_view(request, pk):
     branch = get_object_or_404(Branch, pk=pk)
     queryset = Branch.objects.filter(pk=pk).values('id', 'name', 'transit_number', 'address', 'email', 'capacity', 'last_modified')
@@ -80,3 +91,18 @@ class BranchCreateView(LoginRequiredMixin401, CreateView):
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
+
+class BranchUpdateView(UpdateView):
+    model = Branch
+    form_class = BranchAddForm
+
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            branch = Branch.objects.get(pk=self.kwargs['pk'])
+        except Branch.DoesNotExist:
+            raise Http404
+        
+        if request.user != branch.bank.owner:
+            raise PermissionDenied
+
+        return super().dispatch(request, *args, **kwargs)
