@@ -4,7 +4,7 @@
 <h1>{{ bank.name }}</h1>
 <p>{{ bank.description }}</p>
 <p>Swift code: {{ bank.swift_code }}</p>
-<p>Inst number: {{ bank.institution_number }}</p>
+<p>Inst number: {{ bank.inst_num }}</p>
 
 <div style="margin-left: 20px; margin-top: 20px;">
     <h4>Branches:</h4>
@@ -17,7 +17,7 @@
         {% for branch in bank.branch_set.all %}
         <tr>
             <td><a href="{% url 'branch-detail' branch.id %}">{{ branch.name }}</a></td>
-            <td>{{ branch.transit_number }}</td>
+            <td>{{ branch.transit_num }}</td>
             <td>{{ branch.address }}</td>
         </tr>
         {% empty %}
