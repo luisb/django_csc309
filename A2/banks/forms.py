@@ -76,6 +76,12 @@ class BranchAddForm(forms.ModelForm):
         model = Branch
         fields = ['name', 'transit_num', 'address', 'email', 'capacity']
 
+    def clean(self):
+        self.cleaned_data = super(BranchAddForm, self).clean()
+        if self.cleaned_data['capacity'] == '':
+            self.cleaned_data['capacity'] = None
+        return self.cleaned_data
+
     def clean_name(self):
         data = self.cleaned_data["name"]
         len_data = len(data)
