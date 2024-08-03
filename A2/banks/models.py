@@ -7,7 +7,7 @@ from django.urls import reverse
 class Bank(models.Model):
     name = models.CharField(max_length=100)
     swift_code = models.CharField(max_length=100)
-    institution_number = models.CharField(max_length=100)
+    inst_num = models.CharField(max_length=100)
     description = models.CharField(max_length=100)
     owner = models.ForeignKey(User, on_delete=models.RESTRICT)
 
@@ -20,7 +20,7 @@ class Bank(models.Model):
 
 class Branch(models.Model):
     name = models.CharField(max_length=100)
-    transit_number = models.CharField(max_length=100)
+    transit_num = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
     email = models.EmailField(default='admin@utoronto.ca')
     capacity = models.IntegerField(null=True, blank=True)

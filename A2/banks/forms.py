@@ -13,12 +13,12 @@ def is_gt_100(value):
 class BankAddForm(forms.ModelForm):
     name = forms.CharField()
     description = forms.CharField()
-    institution_number = forms.CharField()
+    inst_num = forms.CharField()
     swift_code = forms.CharField()
     
     class Meta:
         model = Bank
-        fields = ['name', 'description', 'institution_number',
+        fields = ['name', 'description', 'inst_num',
                   'swift_code']
     
     def clean_name(self):
@@ -67,14 +67,14 @@ class BankAddForm(forms.ModelForm):
 
 class BranchAddForm(forms.ModelForm):
     name = forms.CharField()
-    transit_number = forms.CharField()
+    transit_num = forms.CharField()
     address = forms.CharField()
     email = forms.CharField(initial='admin@utoronto.ca')
     capacity = forms.CharField(required=False)
 
     class Meta:
         model = Branch
-        fields = ['name', 'transit_number', 'address', 'email', 'capacity']
+        fields = ['name', 'transit_num', 'address', 'email', 'capacity']
 
     def clean_name(self):
         data = self.cleaned_data["name"]
@@ -87,8 +87,8 @@ class BranchAddForm(forms.ModelForm):
             raise ValidationError(f"Ensure this value has at most 200 characters (it has {len_data})")
         return data
     
-    def clean_transit_number(self):
-        data = self.cleaned_data["transit_number"]
+    def clean_transit_num(self):
+        data = self.cleaned_data["transit_num"]
         len_data = len(data)
 
         if len_data == 0:

@@ -35,7 +35,7 @@ class BankDetailView(generic.DetailView):
 
 class BankCreateView(LoginRequiredMixin401, CreateView):
     model = Bank
-    #fields = ['name', 'description', 'institution_number', 'swift_code']
+    #fields = ['name', 'description', 'inst_num', 'swift_code']
     form_class = BankAddForm
     
     def post(self, request, *args, **kwargs):
@@ -55,13 +55,13 @@ class BranchListView(generic.ListView):
 @login_required401
 def branch_detail_view(request, pk):
     branch = get_object_or_404(Branch, pk=pk)
-    queryset = Branch.objects.filter(pk=pk).values('id', 'name', 'transit_number', 'address', 'email', 'capacity', 'last_modified')
+    queryset = Branch.objects.filter(pk=pk).values('id', 'name', 'transit_num', 'address', 'email', 'capacity', 'last_modified')
     s_qs = str(json.dumps(list(queryset), default=str)).lstrip('[').rstrip(']')
     return render(request, 'banks/branch_detail.html', {'data': s_qs})
 
 class BranchCreateView(LoginRequiredMixin401, CreateView):
     model = Branch
-    #fields = ['name', 'transit_number', 'address', 'email', 'capacity']
+    #fields = ['name', 'transit_num', 'address', 'email', 'capacity']
     form_class = BranchAddForm
 
     def dispatch(self, request, *args, **kwargs):

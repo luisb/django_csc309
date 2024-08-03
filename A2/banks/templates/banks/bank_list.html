@@ -6,7 +6,7 @@
   <ul>
     {% for bank in bank_list %}
     <li>
-        <a href="{{ bank.get_absolute_url }}">{{ bank.name }}</a> {{ bank.institution_number }}
+        <a href="{{ bank.get_absolute_url }}">{{ bank.name }}</a> {{ bank.inst_num }}
     </li>
     {% endfor %}
   </ul>
